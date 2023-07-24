@@ -52,12 +52,12 @@ class DETRKeypoint(BaseModel):
         src = self.conv(src)
         hs = self.transformer(src, mask, self.query_embed.weight, pos)[0]
 
-        outputs_visibility = self.visibility_embed(hs)
+        outputs_visibility = self.visibility_embed(hs).sigmoid()
         outputs_kpts = self.kpts_embed(hs).sigmoid()
 
         out = {
-            'pred_visibility': outputs_visibility[-1][:, 0, :],
-            'pred_kpts': outputs_kpts[-1][:, 0, :].unflatten(-1, (5, 2))
+            'pred_kpts': outputs_kpts[-1][:, 0, :].unflatten(-1, (5, 2)),
+            'pred_visibility': outputs_visibility[-1][:, 0, :]
         }
 
         return out
