@@ -67,5 +67,6 @@ def show_sample(
             ax.add_patch(kpt_mark)
 
             kpt_text = get_kpt_text(kpt, kpt_class)
+            ax.add_artist(kpt_text)
 
     plt.show()
