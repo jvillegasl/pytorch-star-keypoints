@@ -7,7 +7,7 @@ from model.transformer import Transformer
 from utils import nested_tensor_from_tensor_list
 
 
-class DETRKeypoint(BaseModel):
+class DETRKpts(BaseModel):
     hidden_dim: int = 64
     num_heads: int = 4
     num_encoder_layers: int = 4
