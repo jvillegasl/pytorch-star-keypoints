@@ -4,7 +4,7 @@ from data_loader.coco import CocoDetection, make_coco_transforms
 from utils import collate_fn
 
 
-class StarsKptDataLoader(BaseDataLoader):
+class StarsKptsDataLoader(BaseDataLoader):
     def __init__(
             self,
             data_dir,
