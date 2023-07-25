@@ -33,10 +33,9 @@ class DETRKpts(BaseModel):
             return_intermediate_dec=True
         )
 
-        self.visibility_embed = nn.Linear(self.hidden_dim, num_kpts)
-        self.kpts_embed = MLP(
-            self.hidden_dim, self.hidden_dim, 2 * num_kpts, 3)
-        self.query_embed = nn.Embedding(1, self.hidden_dim)
+        self.visibility_embed = nn.Linear(self.hidden_dim, 1)
+        self.kpts_embed = MLP(self.hidden_dim, self.hidden_dim, 2, 3)
+        self.query_embed = nn.Embedding(num_kpts, self.hidden_dim)
 
     def forward(self, input: tuple[Tensor, Tensor] | list[Tensor] | Tensor):
         if not isinstance(input, tuple):
@@ -56,8 +55,8 @@ class DETRKpts(BaseModel):
         outputs_kpts = self.kpts_embed(hs).sigmoid()
 
         out = {
-            'pred_kpts': outputs_kpts[-1][:, 0, :].unflatten(-1, (5, 2)),
-            'pred_visibility': outputs_visibility[-1][:, 0, :]
+            'pred_kpts': outputs_kpts[-1],
+            'pred_visibility': outputs_visibility[-1]
         }
 
         return out
